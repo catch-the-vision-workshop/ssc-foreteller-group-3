@@ -40,24 +40,53 @@ app.get("/getForecast", async (req, res) => {
 
 		// TODO: Determine text color based on temperature
 		let textColor = "black";
+		if (data.current.temp_c<0){
+			textColor = "cyan";
+		} else if (data.current.temp_c<15){
+			textColor = "blue";
+		} else if (data.current.temp_c<30){
+			textColor = "orange";
+		} else {
+			textColor = "red";	
+		}
 
 		// TODO: Calculate moisture level, divide by 10
-		let moistLevel = 0;
+		let moistLevel = data.current.humidity/10;
+		
 
 		// TODO: Calculate sum, maximum, and minimum temperature
         const forecastDay = data.forecast.forecastday[0];
 		const hours = forecastDay.hour;
-		let sumTemp = 0;
+		let sumTemp =0 ;
 		let maxTemp = -Infinity;
 		let minTemp = Infinity;
+		for(let i=0; i<hours.length;i++){
+			const currenttemperature = hours[i].temp_c;
+			sumTemp += currenttemperature
+			if(currenttemperature>maxTemp){
+				maxTemp = currenttemperature
+			}
+				else if(currenttemperature<minTemp){
+					minTemp = currenttemperature
+				}
+		}
 
 		// TODO: Calculate average temperature
-        const averageTemp = 0;
+        const averageTemp = sumTemp/hours.length;
+		
 
 
 		// TODO: Find the maximum UV index and the time it occurs
 		let maxUVIndex = 0;
 		let maxUVTime = "";
+		for(let i=0; i<hours.length;i++){
+			let currentUV = hours[i].uv ;
+			if (currentUV>maxUVIndex){
+				maxUVIndex = currentUV;
+				maxUVTime = hours[i].time
+			}
+			 
+		}
 		
 		// Structure and send the response data
 		res.json({
