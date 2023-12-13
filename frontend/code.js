@@ -57,7 +57,7 @@ cityForm.onsubmit = async function (event) {
 	// "Last Quarter": "🌗",
 	// "Waning Crescent": "🌘",
 	let moonPhaseEmojis = "";
-	if (forecastData.moonPhase === "New Moo") { 
+	if (forecastData.moonPhase === "New Moon") { 
 		moonPhaseEmojis = "🌑" 
 	} 
 	if (forecastData.moonPhase === "Waxing Crescent") { 
